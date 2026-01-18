@@ -24,8 +24,16 @@ function AboutUs() {
     }
   };
 
+  const handleKeyDown = () => {
+    console.log("key down");
+  };
+
   useEffect(() => {
     fetchPosts();
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   useEffect(() => {
