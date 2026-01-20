@@ -4,43 +4,32 @@ import { useNavigate } from "react-router";
 
 function AboutUs() {
   const navigate = useNavigate();
-  const [posts, setPosts] = useState([]);
-  const [loader, setLoader] = useState(false);
-  const [error, setError] = useState(false);
+  const [posts, setPosts] = useState(null)
 
-  const fetchPosts = async () => {
-    setLoader(true);
+
+  const fetchPostData = async () => {
     try {
-      // api call
-      const res = await fetch("https://dummyjson.com/posts?limit=6");
-      const data = await res.json();
-      console.log(data);
-      setPosts(data.posts);
-      setLoader(false);
+      // API call
+      let res = await fetch("https://dummyjson.com/posts")
+
+      const data = await res.json()
+      console.log("data", data)
+      setPosts(data.posts)
     } catch (err) {
-      console.log(err);
-      setLoader(false);
-      setError(true);
+      console.error("err", err)
     }
-  };
-
-  const handleKeyDown = () => {
-    console.log("key down");
-  };
+  }
 
   useEffect(() => {
-    fetchPosts();
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+    fetchPostData()
 
+    return (() => {
+      // step 4 section
+    })
+  }, [])
   useEffect(() => {
-    if (error) navigate("/error");
-  }, [error]);
-  // fetch data from api
-  // update the data in state
+    // some change listener
+  }, [posts])
 
   return (
     <section id="about" className="about-us-section">
@@ -62,15 +51,14 @@ function AboutUs() {
             </p>
           </div>
           <div className="about-features">
-            {posts &&
-              posts.length > 0 &&
-              posts.map((post, index) => (
-                <div className="feature-icon" key={index}>
-                  🚀
-                  <p style={{ fontSize: 12 }}>{post.title}</p>
-                  <p style={{ fontSize: 9 }}>{post.body}</p>
-                </div>
-              ))}
+            {posts && posts.length > 0 && posts.map((post, key) => (
+              <div className="feature-icon" style={{ height: 250, width: 400, backgroundColor: 'gray' }} >
+
+                <p style={{ fontSize: 12 }}>{post.title}</p>
+                <p style={{ fontSize: 9 }}>{post.body}</p>
+              </div>
+            ))}
+
           </div>
         </div>
       </div>

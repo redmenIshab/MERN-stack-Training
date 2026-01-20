@@ -8,7 +8,7 @@ import { Routes, Route } from "react-router";
 function App() {
   return (
     <Routes>
-      <Route index element={<Home />} />
+      <Route path="/" element={<Home />} />
 
       <Route path="/sign-in" element={<Auth />} />
 
