@@ -1,34 +1,72 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Button from "../component/Button";
 
 const Auth = () => {
-  // logic -> token ?? navigate to dashboard
-  const [error, setError] = React.useState(false);
 
-  React.useEffect(() => {
-    console.log("After Render ----  2");
-    
-    // mount vaye paxi ko logic
-    return () => {
-      console.log("After Unmount --- 4");
-      //unmount huda ko logic
-    };
-  });
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
 
-  React.useEffect(() => {
-    //tyo value update //vayepaxi ko logic
-    console.log("After Error Update --- 3");
-    if (error) navigate("/error");
-  }, [
-    error,
-    // kun value lai listen garera basne
-  ]);
+  const handleSubmit = (e) => {
+    console.log("Form submitted")
+    // API implementation for login
+    // token store 
+  };
 
-  // release such task that leaks memory or does heavy lifting processing
+  const onChangeEmail = (event) => {
+    console.log("Email changed", event.target.value)
+    let email = event.target.value;
+    setEmail(email)
+  }
+  const onChangePassword = (event) => {
+    console.log("Password changed", event.target.value)
+    let email = event.target.value;
+    setPassword(email)
+  }
+
+  const handleOnBlurEmail = () => {
+    console.log("user compeleted editing email")
+    if (email.length < 5) {
+      setError("Email must be greater than 5 characters")
+      setEmail("")
+    }
+  }
+
+  const handleOnBlurPassword = () => {
+    if (password.length < 5) setError("Min. Password length is 5 characters")
+  }
+
+  useEffect(() => {
+    if (email.length > 5) {
+      setError("")
+    }
+    if (password.length > 5) setError("")
+  }, [email, password])
+
   return (
-    <div>
-      {console.log("Component Rendered --- 1")}
-      {/* eventlistener, animation logic GPU load, setInterval <- */}
-      <h1>Auth</h1>
+    <div style={{ height: "100vh", paddingTop: 100, backgroundColor: 'lightgray', padding: 10, borderRadius: 10 }}>
+      <h1 style={{ textAlign: 'center', margin: 10, fontSize: 24 }}> Login</h1>
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: 'center', justifyContent: 'center', }}>
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={onChangeEmail}
+          onBlur={handleOnBlurEmail}
+          value={email}
+          style={{ padding: 10, margin: 10, fontSize: 16, borderRadius: 5, minWidth: 300 }}
+        />
+        <input placeholder="Password"
+          type="password"
+          onChange={onChangePassword}
+          onBlur={handleOnBlurPassword}
+          value={password}
+          style={{ padding: 10, margin: 10, fontSize: 16, borderRadius: 5, minWidth: 300 }} />
+
+        <p style={{ color: 'red', margin: 10, fontSize: 16 }}>{error}</p>
+
+        <Button title="Login" backgroundColor="blue" disabled={error.length > 0} />
+      </form>
+
     </div>
   );
 };

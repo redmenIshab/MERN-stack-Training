@@ -1,8 +1,9 @@
 import React from "react";
 // properties -> {title , backgroundColor, onPress}
 function Button(props) {
+  const { disabled } = props;
   return (
-    <div
+    <button
       style={{
         borderRadius: 8,
         display: "flex",
@@ -10,19 +11,23 @@ function Button(props) {
         justifyContent: "center",
         backgroundColor: props.backgroundColor,
         marginTop: 10,
-        padding: 5,
+        padding: 10,
+        minWidth: 250
       }}
+      disabled={disabled}
     >
       <span
         style={{
           textAlign: "center",
           fontSize: 18,
-          fontFamily: "cursive",
+          fontFamily: "Helvetica",
+          color: 'white'
+
         }}
       >
         {props.title}
       </span>
-    </div>
+    </button>
   );
 }
 

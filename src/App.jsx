@@ -10,7 +10,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
 
-      <Route path="/sign-in" element={<Auth />} />
+      <Route path="/auth/sign-in" element={<Auth />} />
 
       {/* team nested route */}
       <Route path="team">
