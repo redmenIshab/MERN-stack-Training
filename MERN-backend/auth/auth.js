@@ -1,7 +1,7 @@
 
 
-const handlerAuth =(req,res,next)=>{
-    res.send ("Auth route");
+const handlerAuth = (req,res,next)=>{
+    res.send("Auth page");
 
 }
 

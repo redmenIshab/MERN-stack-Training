@@ -1,12 +1,12 @@
 import { Router } from "express";
-import handlerAuth from "./auth.js"
+import handlerAuth from "./auth/auth.js"
 import loginController from "./auth/loginController.js"
 
 
 const router=Router();
 
-router.get('/auth/', handleAuth)
-router.post('/auth/login', logincontroller)
+router.get('/auth/', handlerAuth)
+router.post('/auth/login',loginController)
 
 export default router;
 
