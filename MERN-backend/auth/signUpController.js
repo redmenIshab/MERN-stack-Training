@@ -1,16 +1,19 @@
 
-import UserModel from "../models/user.js";
+import UserModel from "../model/userModel.js";
+import bcrypt from "bcrypt";
 
-
+const SALT_ROUNDS = 10;
  const signUpController = async (req, res) => {
     try {
         let { username, email, password } = req.body;
-        await UserModel.create({ username, email, password });
+        let encryptedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
+        await UserModel.create({ username:username, email:email , password: encryptedPassword });
 
         res.status(200).send({ message: "User created successfully" });
-    } catch (error) {
-        console.log("Error in signUpController:", error);
-        res.status(500).send({ error: error.message });
+    } catch (err) {
+        console.log("Error in signUpController:", err);
+        res.status(500).send({ message: "Internal Server Error" });
     }
 };
 
